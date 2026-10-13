@@ -1,8 +1,15 @@
 # HALVETH provenance and attribution
 
 This public project is a fork of `tronprotocol/java-tron`. The root
-`LICENSE` identifies the repository's LGPL-3.0 terms; preserve upstream
-copyright and license notices when changing or redistributing covered code.
+`LICENSE` carries the upstream LGPL-3.0-based text and its additional
+permissions; preserve upstream copyright and license notices when changing
+or redistributing covered code.
+
+The upstream and fork copies of `LICENSE` contain the literal header
+`Copyright (C) [2007] [TRON Foundation], Inc. <https://fsf.org/>`. This project
+preserves that upstream file and does not independently establish the header's
+provenance or legal effect. Do not treat this attribution note as resolving
+that question or replacing the repository license.
 
 HALVETH-specific files are maintained under `halveth/` and should be credited
 to the project contribution recorded in their Git commit history. These files
