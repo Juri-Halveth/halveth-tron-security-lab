@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>HALVETH | Quorum Lab</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #eaf0f5;
+      --muted: #98a9b8;
+      --panel: #101924;
+      --panel-2: #152330;
+      --line: #2a3a48;
+      --cyan: #6ee7ef;
+      --violet: #b6a0ff;
+      --amber: #ffc77b;
+      --green: #83e6b2;
+      --red: #ff8d9a;
+      --bg: #071018;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(ellipse at 50% -10%, rgba(45, 117, 152, .2), transparent 42rem),
+        linear-gradient(180deg, #09131d, var(--bg) 34rem);
+      color: var(--ink);
+      font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    a { color: var(--cyan); text-underline-offset: 3px; }
+    button, input { font: inherit; }
+    .shell { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+    header { padding: 34px 0 20px; border-bottom: 1px solid var(--line); }
+    .eyebrow { color: var(--cyan); font: 700 12px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { margin: 14px 0 8px; font-size: clamp(36px, 7vw, 70px); line-height: .98; letter-spacing: -.045em; }
+    .lede { max-width: 750px; margin: 0; color: #c0ccd5; font-size: 18px; }
+    main { padding: 26px 0 48px; }
+    .grid { display: grid; grid-template-columns: minmax(250px, .8fr) minmax(0, 1.5fr); gap: 18px; align-items: stretch; }
+    .panel { border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(155deg, rgba(21,35,48,.96), rgba(12,22,32,.97)); box-shadow: 0 20px 60px rgba(0,0,0,.18); }
+    .controls { padding: 20px; }
+    .panel h2 { margin: 0 0 16px; font-size: 18px; letter-spacing: -.015em; }
+    .control { padding: 14px 0; border-top: 1px solid var(--line); }
+    .control-head { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+    label { color: #c5d1dc; font-weight: 650; }
+    output { color: var(--cyan); font: 700 18px ui-monospace, SFMono-Regular, Consolas, monospace; }
+    input[type="range"] { width: 100%; margin: 13px 0 2px; accent-color: var(--cyan); cursor: pointer; }
+    .hint { color: var(--muted); font-size: 13px; }
+    .preset { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .preset button { border: 1px solid #405463; border-radius: 999px; background: #0b151f; color: var(--ink); padding: 7px 11px; cursor: pointer; }
+    .preset button:hover, .preset button:focus-visible { border-color: var(--cyan); outline: none; }
+    .visual { padding: 20px; min-height: 100%; }
+    .visual-top { display: flex; justify-content: space-between; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; color: var(--muted); font-size: 12px; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 9px; height: 9px; display: inline-block; border-radius: 50%; background: var(--cyan); }
+    .dot.b { background: var(--violet); }
+    .dot.ab { background: var(--green); }
+    .dot.fault { background: var(--red); }
+    .field { display: grid; grid-template-columns: repeat(auto-fit, minmax(58px, 1fr)); gap: 9px; margin: 26px 0 20px; }
+    .node { display: grid; place-items: center; gap: 3px; min-height: 64px; border: 1px solid var(--line); border-radius: 12px; background: #0b151e; color: var(--muted); font: 700 12px ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .node strong { font-size: 15px; color: var(--ink); }
+    .node.a { border-color: #5baebc; background: rgba(58,151,170,.13); }
+    .node.b { border-color: #8c7bc9; background: rgba(142,119,215,.14); }
+    .node.ab { border-color: #54b782; background: rgba(60,178,117,.17); }
+    .node.fault { box-shadow: inset 0 -3px 0 var(--red); }
+    .node .membership { font-size: 10px; letter-spacing: .06em; }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .metric { min-height: 94px; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: rgba(5,12,18,.42); }
+    .metric .value { display: block; margin: 3px 0 2px; font: 700 23px ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .metric .label { color: var(--muted); font-size: 12px; }
+    .status { margin-top: 14px; padding: 13px 15px; border-radius: 12px; background: #0b151f; border: 1px solid var(--line); }
+    .status strong { display: block; margin-bottom: 3px; }
+    .status.good { border-color: rgba(131,230,178,.5); }
+    .status.bad { border-color: rgba(255,141,154,.48); }
+    .formula { margin: 14px 0 0; color: #c2cdd5; font: 13px/1.65 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .below { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+    .note { padding: 20px; }
+    .note p { margin: 0 0 12px; color: #c1ccd5; }
+    .callout { border-left: 3px solid var(--amber); padding: 10px 13px; background: rgba(255,199,123,.07); border-radius: 0 10px 10px 0; color: #f2d8b5; }
+    .sources { padding-left: 19px; margin: 0; color: #c1ccd5; }
+    .sources li { margin: 8px 0; }
+    footer { border-top: 1px solid var(--line); padding: 17px 0 24px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 760px) { .grid, .below { grid-template-columns: 1fr; } .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (prefers-reduced-motion: no-preference) { .node { transition: border-color .18s ease, background .18s ease; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell">
+      <div class="eyebrow">HALVETH / TRON · RESEARCH INSTRUMENT 01</div>
+      <h1>Quorum Lab</h1>
+      <p class="lede">Move the membership, fault bound, and quorum size. See where overlap guarantees at least one correct shared member, and where availability begins to fail.</p>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="grid" aria-label="Quorum model">
+      <div class="panel controls">
+        <h2>Model parameters</h2>
+        <div class="control">
+          <div class="control-head"><label for="members">Members, n</label><output id="members-value" for="members">7</output></div>
+          <input id="members" type="range" min="4" max="31" step="1" value="7">
+          <div class="hint">Fixed membership for this model.</div>
+        </div>
+        <div class="control">
+          <div class="control-head"><label for="faults">Byzantine bound, f</label><output id="faults-value" for="faults">2</output></div>
+          <input id="faults" type="range" min="0" max="6" step="1" value="2">
+          <div class="hint">At most this many members may behave arbitrarily.</div>
+        </div>
+        <div class="control">
+          <div class="control-head"><label for="quorum">Quorum size, q</label><output id="quorum-value" for="quorum">5</output></div>
+          <input id="quorum" type="range" min="1" max="7" step="1" value="5">
+          <div class="hint">Each certificate contains q distinct members.</div>
+        </div>
+        <div class="preset" aria-label="Presets">
+          <button type="button" id="classic">Classic 3f + 1</button>
+          <button type="button" id="tron-ref">TRON notes</button>
+        </div>
+      </div>
+
+      <div class="panel visual">
+        <div class="visual-top">
+          <h2>Two minimum-overlap quorums</h2>
+          <div class="legend" aria-label="Legend">
+            <span><i class="dot"></i>A</span><span><i class="dot b"></i>B</span>
+            <span><i class="dot ab"></i>A + B</span><span><i class="dot fault"></i>Byzantine</span>
+          </div>
+        </div>
+        <div id="nodes" class="field" role="img" aria-label="Validator membership diagram"></div>
+        <div class="metrics" aria-live="polite">
+          <div class="metric"><span class="label">Minimum overlap</span><span id="overlap" class="value">3</span><span class="hint">max(0, 2q − n)</span></div>
+          <div class="metric"><span class="label">Correct overlap floor</span><span id="correct" class="value">1</span><span class="hint">max(0, overlap − f)</span></div>
+          <div class="metric"><span class="label">Safe quorum floor</span><span id="safe-floor" class="value">5</span><span class="hint">2q − n &gt; f</span></div>
+          <div class="metric"><span class="label">Available quorum ceiling</span><span id="live-ceiling" class="value">5</span><span class="hint">q ≤ n − f</span></div>
+        </div>
+        <div id="verdict" class="status good" role="status"></div>
+        <p class="formula" id="interval"></p>
+      </div>
+    </section>
+
+    <section class="below">
+      <article class="panel note" id="tron-note">
+        <h2>TRON context stays separate</h2>
+        <p>The current TRON developer documentation describes DPoS with 27 active Super Representatives. It describes solidification when at least 19 distinct active SRs have each produced a block at that height or above. That rule is based on produced-chain progress; this lab's set-intersection model is not a TRON consensus switch.</p>
+        <div class="callout"><strong>Source code can contain PBFT message types without proving that the live network is running this abstract PBFT model.</strong> The diagram models arithmetic only. It sends no requests and has no node, wallet, or RPC connection.</div>
+      </article>
+      <article class="panel note">
+        <h2>Source anchors</h2>
+        <ul class="sources">
+          <li><a href="https://dspace.mit.edu/entities/publication/0b00af4c-cc94-40a4-ac98-96f0d78216d1">Castro, Practical Byzantine Fault Tolerance, MIT-LCS-TR-817 (2001)</a></li>
+          <li><a href="https://developers.tron.network/docs/concensus">TRON Developers: Consensus and DPoS</a></li>
+          <li><a href="https://github.com/tronprotocol/java-tron/blob/develop/protocol/src/main/protos/core/Tron.proto">java-tron protocol schema: Tron.proto</a></li>
+        </ul>
+        <p class="hint" style="margin-top:13px">This page summarizes a bounded source snapshot checked on 2026-10-13. Recheck live documentation before relying on changing network parameters.</p>
+      </article>
+    </section>
+  </main>
+  <footer><div class="shell">HALVETH Quorum Lab · local-only model · no production-equivalence claim</div></footer>
+
+  <script src="quorum-model.js"></script>
+  <script>
+    (() => {
+      const members = document.querySelector("#members");
+      const faults = document.querySelector("#faults");
+      const quorum = document.querySelector("#quorum");
+      const nodes = document.querySelector("#nodes");
+      const byId = (id) => document.getElementById(id);
+
+      function render() {
+        const n = Number(members.value);
+        const f = Number(faults.value);
+        const q = Number(quorum.value);
+        const model = HalvethQuorumModel.computeQuorumModel({ n, f, q });
+        byId("members-value").value = n;
+        byId("faults-value").value = f;
+        byId("quorum-value").value = q;
+        byId("overlap").textContent = model.minIntersection;
+        byId("correct").textContent = model.minCorrectIntersection;
+        byId("safe-floor").textContent = model.minSafeQuorum;
+        byId("live-ceiling").textContent = model.maxAvailableQuorum;
+
+        nodes.replaceChildren();
+        const a = new Set(model.quorumA);
+        const b = new Set(model.quorumB);
+        const faulty = new Set(model.faulty);
+        for (let member = 1; member <= n; member += 1) {
+          const inA = a.has(member);
+          const inB = b.has(member);
+          const node = document.createElement("div");
+          node.className = "node";
+          if (inA && inB) node.classList.add("ab");
+          else if (inA) node.classList.add("a");
+          else if (inB) node.classList.add("b");
+          if (faulty.has(member)) node.classList.add("fault");
+          const label = document.createElement("strong");
+          label.textContent = String(member).padStart(2, "0");
+          const membership = document.createElement("span");
+          membership.className = "membership";
+          membership.textContent = `${inA ? "A" : ""}${inA && inB ? "+" : ""}${inB ? "B" : ""}${faulty.has(member) ? " · f" : ""}` || "—";
+          node.append(label, membership);
+          nodes.append(node);
+        }
+
+        const verdict = byId("verdict");
+        verdict.className = `status ${model.safeAndLive ? "good" : "bad"}`;
+        const safeText = model.safe ? "Safety bound: overlap leaves at least one correct shared member." : "Safety bound: the minimum overlap can be entirely Byzantine.";
+        const liveText = model.live ? "Availability bound: q members can answer with up to f unavailable." : "Availability bound: q is too large if f members do not answer.";
+        verdict.replaceChildren();
+        const title = document.createElement("strong");
+        title.textContent = model.safeAndLive ? "Safe-and-live interval reached" : "Outside the safe-and-live interval";
+        const summary = document.createElement("span");
+        summary.textContent = `${safeText} ${liveText} Membership feasibility n ≥ 3f + 1: ${model.feasibleMembership ? "yes" : "no"}.`;
+        verdict.append(title, summary);
+
+        byId("interval").textContent = `For n=${n}, f=${f}: ${model.minSafeQuorum} ≤ q ≤ ${model.maxAvailableQuorum}. The shown A/B pair attains the lower-bound overlap; it is one constructed countermodel, not an enumeration of all quorums.`;
+      }
+
+      function setModel(n, f, q) {
+        members.value = String(n);
+        faults.max = String(n - 1);
+        faults.value = String(f);
+        quorum.max = String(n);
+        quorum.value = String(q);
+        render();
+      }
+
+      members.addEventListener("input", () => {
+        const n = Number(members.value);
+        const f = Math.min(Number(faults.value), n - 1);
+        faults.max = String(n - 1);
+        faults.value = String(f);
+        quorum.max = String(n);
+        quorum.value = String(Math.min(Number(quorum.value), n));
+        render();
+      });
+      faults.addEventListener("input", render);
+      quorum.addEventListener("input", render);
+      byId("classic").addEventListener("click", () => setModel(7, 2, 5));
+      byId("tron-ref").addEventListener("click", () => {
+        const note = byId("tron-note");
+        note.scrollIntoView({ behavior: "smooth", block: "center" });
+        note.style.outline = "2px solid var(--amber)";
+        window.setTimeout(() => { note.style.outline = ""; }, 1200);
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>
