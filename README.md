@@ -1,3 +1,13 @@
+# TRON-Protokolllabor – Forschungsfork von java-tron
+
+Ein Forschungsfork der Java-Implementierung von TRON. Die unten erhaltene Upstream-Dokumentation beschreibt java-tron; eigene Forschungsbeiträge sind über die Commit- und Branch-Historie zuzuordnen.
+
+[Quellzweige und Beiträge](https://github.com/Juri-Halveth/halveth-tron-security-lab/branches) · [HALVETH-Portfolio](https://juri-halveth.github.io/)
+
+---
+
+## Erhaltene Upstream-Dokumentation
+
 <h1 align="center">
   <br>
   <img width=20% src="https://github.com/tronprotocol/wiki/blob/master/images/java-tron.jpg?raw=true">
