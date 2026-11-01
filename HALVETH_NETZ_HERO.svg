@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+  <title id="title">HALVETH / NETZ · TRON PROTOCOL LAB</title>
+  <desc id="desc">TRON-Protokolllabor: prüfbarer Knotengraph ohne Produktlogo</desc>
+  <defs>
+    <linearGradient id="space" x2="1" y2="1">
+      <stop stop-color="#080e1b"/>
+      <stop offset="1" stop-color="#182638"/>
+    </linearGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="#abc3dd" stroke-opacity=".075"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="300" rx="22" fill="url(#space)"/>
+  <rect width="1200" height="300" rx="22" fill="url(#grid)"/>
+  <path d="M0 0h8v300H0" fill="#ff8f91"/>
+  <path d="M815 35v230" stroke="#ff8f91" stroke-opacity=".3"/>
+  <text x="68" y="64" fill="#ff8f91" font-size="23" font-weight="700" letter-spacing="4" font-family="Segoe UI,Arial,sans-serif">HALVETH / NETZ</text>
+  <text x="69" y="113" fill="#aec8d8" font-size="18" letter-spacing="3" font-family="Segoe UI,Arial,sans-serif">SICHERHEIT</text>
+  <text x="66" y="190" fill="#f7fbff" font-size="51" font-weight="750" font-family="Segoe UI,Arial,sans-serif">TRON PROTOCOL LAB</text>
+  <text x="69" y="232" fill="#bfd1e2" font-size="22" font-family="Segoe UI,Arial,sans-serif">Öffentlicher Forschungsfork · Quellstand</text>
+  <path d="M68 257h322" stroke="#ff8f91" stroke-width="3" stroke-linecap="round"/>
+
+          <path d="M856 180l79-86 79 35 77-62m-235 113l82 66 76-117 77 66m-156-101l3 152" fill="none" stroke="#ff8f91" stroke-width="2" opacity=".8"/>
+          <circle cx="856" cy="180" r="13" fill="#ff8f91"/><circle cx="935" cy="94" r="13" fill="#ff8f91"/>
+          <circle cx="1014" cy="129" r="13" fill="#ff8f91"/><circle cx="1091" cy="67" r="13" fill="#ff8f91"/>
+          <circle cx="938" cy="246" r="13" fill="#ff8f91"/><circle cx="1091" cy="195" r="13" fill="#ff8f91"/>
+          <circle cx="1014" cy="129" r="28" fill="none" stroke="#ffd3d3" stroke-width="2" opacity=".7"/>
+
+</svg>
