@@ -1,5 +1,9 @@
 # TRON-Protokolllabor – Forschungsfork von java-tron
 
+![HALVETH / NETZ – TRON-Protokolllabor: prüfbarer Knotengraph ohne Produktlogo](HALVETH_NETZ_HERO.svg)
+
+**HALVETH / NETZ · Sicherheit.** [Starship Lab öffnen](https://juri-halveth.github.io/universum/) und dort die Projektkarte „TRON SECURITY LAB“ auswählen.
+
 Ein Forschungsfork der Java-Implementierung von TRON. Die unten erhaltene Upstream-Dokumentation beschreibt java-tron; eigene Forschungsbeiträge sind über die Commit- und Branch-Historie zuzuordnen.
 
 [Quellzweige und Beiträge](https://github.com/Juri-Halveth/halveth-tron-security-lab/branches) · [HALVETH-Portfolio](https://juri-halveth.github.io/)
